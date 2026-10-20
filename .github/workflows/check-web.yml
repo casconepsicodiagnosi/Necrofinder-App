@@ -1,0 +1,24 @@
+name: Verifica NecroFinder Seal web
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Verifica sintassi
+        run: |
+          node --check dist/app.mjs
+          node --check dist/envelope.mjs
+          node --check dist/encrypt-worker.mjs
+          node --check dist/sw.js
+      - name: Cifratura, interoperabilità indipendente e offline
+        run: node --test tests/*.test.mjs

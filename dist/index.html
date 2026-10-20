@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f2e9">
+  <meta name="description" content="NecroFinder Seal · DWARF. Cifra un file sul tuo iPhone e custodiscilo nella Cassaforte sul Mac.">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' blob:; connect-src 'none'; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="apple-mobile-web-app-title" content="NecroFinder Seal">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>NecroFinder Seal · DWARF</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/180.png">
+  <link rel="icon" type="image/png" href="icons/192.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <svg class="symbol-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+    <symbol id="lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></symbol>
+    <symbol id="file-icon" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9zM14 3v6h6M8 14h8M8 17h5"/></symbol>
+    <symbol id="share-icon" viewBox="0 0 24 24"><path d="M12 15V3m-4 4 4-4 4 4M6 11H4v10h16V11h-2"/></symbol>
+    <symbol id="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></symbol>
+    <symbol id="check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+  </defs></svg>
+  <div class="shell">
+    <aside class="intro">
+      <header class="brand-row">
+        <a href="./" class="brand" aria-label="NecroFinder Seal · DWARF">
+          <img src="necrofinder.png" width="78" height="88" alt="Il nano Necrofinder con cartella e lanterna">
+          <span><span class="maker">DWARF</span><strong>NecroFinder <span>Seal</span></strong></span>
+        </a>
+        <button id="theme" class="icon-button" aria-label="Cambia tema" title="Cambia tema"><svg class="icon"><use href="#sun"/></svg></button>
+      </header>
+      <div class="intro-copy">
+        <p class="eyebrow">DAL TUO IPHONE. PER IL TUO MAC.</p>
+        <h1>Cifra qui.<br><span>Custodisci sul Mac.</span></h1>
+        <p class="lead">Una piccola lanterna per ciò che vuoi tenere al sicuro.</p>
+        <div class="local-note"><span class="small-icon"><svg class="icon"><use href="#lock"/></svg></span><div><strong>La cifratura avviene sul telefono.</strong><p>Seal non invia il file a un server. La chiave per aprirlo resta nella tua Cassaforte Mac.</p></div></div>
+      </div>
+      <div class="intro-bottom"><span id="browserBadge" class="badge"><i></i><span id="browserText">Controllo del browser…</span></span><span id="offlineBadge" class="quiet">Preparazione offline…</span></div>
+    </aside>
+    <main id="main">
+      <div id="compatibility" class="message error" role="alert" hidden></div>
+      <section class="step" aria-labelledby="recipientTitle">
+        <div class="step-heading"><span class="step-number">01</span><div><p class="eyebrow">IL DESTINATARIO</p><h2 id="recipientTitle">Collega la tua Cassaforte.</h2></div><span id="recipientCheck" class="step-check" hidden><svg class="icon"><use href="#check"/></svg></span></div>
+        <p class="description">Sul Mac apri <strong>Cassaforte → Copia codice pubblico</strong>. Incolla qui il codice che inizia con NF1.</p>
+        <label for="code" class="field-label">Codice pubblico del Mac</label>
+        <textarea id="code" rows="3" placeholder="NF1.…" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" maxlength="2048" aria-describedby="codeHint"></textarea>
+        <p id="codeHint" class="hint">Qui non serve la password della Cassaforte.</p>
+        <div class="code-actions"><label class="check-label"><input id="remember" type="checkbox" checked> Ricorda questo Mac</label><button id="saveCode" class="secondary" disabled>Salva codice</button></div>
+        <div id="fingerprintArea" class="fingerprint" hidden><span class="field-label">Impronta del Mac collegato</span><code id="fingerprint"></code><label class="check-label verify"><input id="verified" type="checkbox"> <span>Ho confrontato <strong>tutta l’impronta</strong> con quella mostrata sul Mac.</span></label><button id="forget" class="text-button">Scollega questo Mac</button></div>
+      </section>
+      <section class="step" aria-labelledby="fileTitle">
+        <div class="step-heading"><span class="step-number">02</span><div><p class="eyebrow">IL TUO FILE</p><h2 id="fileTitle">Scegli cosa proteggere.</h2></div></div>
+        <p class="description">Foto, video o documenti già sul telefono. L’originale resta al suo posto.</p>
+        <input type="file" id="fileInput" hidden disabled>
+        <button id="pickFile" class="file-picker" disabled><span class="file-art"><svg class="icon"><use href="#file-icon"/></svg></span><span><strong id="fileName">Scegli un file</strong><small id="fileSize">Da File o dalla libreria Foto · fino a 100 MiB</small></span><span class="plus" aria-hidden="true">+</span></button>
+        <p id="selectionHint" class="hint">Salva il codice e conferma l’impronta per continuare.</p>
+        <button id="encrypt" class="primary full" disabled><svg class="icon"><use href="#lock"/></svg> Cifra per il mio Mac</button>
+        <div id="progressArea" class="progress-area" hidden><div><span id="progressLabel">Preparazione…</span><button id="cancel" class="text-button">Annulla</button></div><progress id="progress" max="1" value="0" aria-label="Avanzamento della cifratura"></progress><p class="hint">Mantieni Seal aperto e lo schermo acceso.</p></div>
+      </section>
+      <section id="readyArea" class="step ready" aria-labelledby="readyTitle" hidden>
+        <div class="step-heading"><span class="step-number"><svg class="icon"><use href="#check"/></svg></span><div><p class="eyebrow">PRONTO A PARTIRE</p><h2 id="readyTitle">Ora è un file protetto.</h2></div></div>
+        <p class="description">Contenuto e nome originale sono cifrati nel <strong>.nfenc</strong>. Si apre con la chiave della Cassaforte del Mac collegato.</p>
+        <div class="result-file"><svg class="icon"><use href="#lock"/></svg><span><strong>Contenitore NecroFinder</strong><small id="resultSize"></small></span></div>
+        <button id="share" class="primary full"><svg class="icon"><use href="#share-icon"/></svg> Condividi · scegli AirDrop</button>
+        <a id="download" class="secondary full" download>Salva il .nfenc in File</a>
+        <p id="shareHint" class="hint">Se la condivisione diretta non è disponibile, salva il file e condividilo dall’app File.</p>
+        <div class="next-step"><strong>Sul Mac</strong><p>Apri la Cassaforte, sbloccala e scegli <b>Importa file cifrati…</b>. Seleziona il .nfenc ricevuto.</p></div>
+        <p class="hint">Il file pronto resta solo in questa sessione: salvalo o invialo prima di chiudere.</p>
+        <button id="clearResult" class="text-button">Rimuovi il file pronto da questa sessione</button>
+      </section>
+      <p id="status" class="message" role="status" aria-live="polite">Collega il Mac per iniziare.</p>
+      <section class="help" aria-label="Come usare Seal">
+        <details><summary>Aggiungi Seal alla schermata Home</summary><p>Apri questa pagina in <strong>Safari</strong>, premi <strong>Condividi → Aggiungi alla schermata Home</strong> e conferma. Dall’icona, apri Seal online una prima volta e attendi «Disponibile offline». Non serve un account sviluppatore Apple.</p></details>
+        <details><summary>File, Foto e condivisione</summary><p>Il selettore di iOS può offrire File e Foto. Per mantenere il file già sul dispositivo, scegli «Sul mio iPhone». Se scegli un elemento su iCloud, può essere iOS a scaricarlo prima della cifratura. Condividi solo il <strong>.nfenc</strong>, scegliendo il tuo Mac. Seal non può verificare la ricezione di AirDrop.</p></details>
+        <details><summary>Cosa viene conservato sul telefono?</summary><p>Solo il codice <strong>pubblico</strong>, se scegli di ricordarlo, e i file dell’app per aprirla offline. Il file scelto e il risultato non vengono conservati nell’archivio del sito. Il .nfenc che salvi in File resta dove scegli tu. Gli originali non vengono cancellati.</p></details>
+        <details><summary>Compatibilità e limiti</summary><p>Usa Safari con <strong>iOS 18.4 o successivo</strong>. Limite web: <strong>100 MiB per file</strong>. Il formato è compatibile con la Cassaforte NecroFinder per Mac 0.5/0.6. È un formato prototipo, senza audit indipendente: conserva gli originali e prova il percorso completo con un file di test.</p></details>
+      </section>
+      <footer><span>NecroFinder Seal <span aria-hidden="true">·</span> <b>DWARF</b></span><span>Una nuova luce sui tuoi file.</span></footer>
+    </main>
+  </div>
+  <div id="privacyCurtain" hidden aria-hidden="true"><img src="icons/192.png" alt=""><strong>NecroFinder Seal</strong></div>
+  <noscript>Attiva JavaScript in Safari per utilizzare la cifratura locale di Seal.</noscript>
+  <script type="module" src="app.mjs"></script>
+</body>
+</html>
