@@ -24,14 +24,24 @@
     <symbol id="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></symbol>
     <symbol id="check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
   </defs></svg>
-  <div class="shell">
+  <section id="lockScreen" class="lock-screen" aria-labelledby="lockTitle">
+    <img src="necrofinder.png" width="110" height="130" alt="Il nano NecroFinder">
+    <p class="eyebrow">DWARF · NECROFINDER SEAL</p><h1 id="lockTitle">La tua lanterna, al sicuro.</h1>
+    <p id="lockDescription" class="description">Scegli una password per proteggere l’accesso e l’elenco delle cassaforti su questo telefono.</p>
+    <form id="unlockForm"><label class="field-label" for="appPassword">Password di Seal</label><input id="appPassword" type="password" autocomplete="new-password" required minlength="10">
+    <div id="confirmArea"><label class="field-label" for="confirmPassword">Ripeti la password</label><input id="confirmPassword" type="password" autocomplete="new-password" minlength="10"></div>
+    <button id="unlockButton" class="primary full" type="submit">Crea password ed entra</button></form>
+    <p id="lockMessage" class="hint" role="status" aria-live="polite"></p>
+    <p class="hint">Password diversa da quella del Mac. Non viene inviata online. Se la dimentichi, l’elenco locale non è recuperabile: potrai ricollegare le cassaforti dal Mac dopo aver cancellato i dati del sito. I file sul Mac restano intatti.</p>
+  </section>
+  <div id="appShell" class="shell" hidden inert>
     <aside class="intro">
       <header class="brand-row">
         <a href="./" class="brand" aria-label="NecroFinder Seal · DWARF">
           <img src="necrofinder.png" width="78" height="88" alt="Il nano Necrofinder con cartella e lanterna">
           <span><span class="maker">DWARF</span><strong>NecroFinder <span>Seal</span></strong></span>
         </a>
-        <button id="theme" class="icon-button" aria-label="Cambia tema" title="Cambia tema"><svg class="icon"><use href="#sun"/></svg></button>
+        <button id="lockApp" class="text-button">Blocca</button><button id="theme" class="icon-button" aria-label="Cambia tema" title="Cambia tema"><svg class="icon"><use href="#sun"/></svg></button>
       </header>
       <div class="intro-copy">
         <p class="eyebrow">DAL TUO IPHONE. PER IL TUO MAC.</p>
@@ -44,13 +54,18 @@
     <main id="main">
       <div id="compatibility" class="message error" role="alert" hidden></div>
       <section class="step" aria-labelledby="recipientTitle">
-        <div class="step-heading"><span class="step-number">01</span><div><p class="eyebrow">IL DESTINATARIO</p><h2 id="recipientTitle">Collega la tua Cassaforte.</h2></div><span id="recipientCheck" class="step-check" hidden><svg class="icon"><use href="#check"/></svg></span></div>
-        <p class="description">Sul Mac apri <strong>Cassaforte → Copia codice pubblico</strong>. Incolla qui il codice che inizia con NF1.</p>
-        <label for="code" class="field-label">Codice pubblico del Mac</label>
-        <textarea id="code" rows="3" placeholder="NF1.…" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" maxlength="2048" aria-describedby="codeHint"></textarea>
-        <p id="codeHint" class="hint">Qui non serve la password della Cassaforte.</p>
-        <div class="code-actions"><label class="check-label"><input id="remember" type="checkbox" checked> Ricorda questo Mac</label><button id="saveCode" class="secondary" disabled>Salva codice</button></div>
-        <div id="fingerprintArea" class="fingerprint" hidden><span class="field-label">Impronta del Mac collegato</span><code id="fingerprint"></code><label class="check-label verify"><input id="verified" type="checkbox"> <span>Ho confrontato <strong>tutta l’impronta</strong> con quella mostrata sul Mac.</span></label><button id="forget" class="text-button">Scollega questo Mac</button></div>
+        <div class="step-heading"><span class="step-number">01</span><div><p class="eyebrow">IL DESTINATARIO</p><h2 id="recipientTitle">Cassaforti</h2></div><span id="recipientCheck" class="step-check" hidden><svg class="icon"><use href="#check"/></svg></span></div>
+        <div id="vaultList" class="vault-list" aria-label="Cassaforti salvate"></div>
+        <p id="emptyVaults" class="description">Collega la prima Cassaforte del tuo Mac.</p>
+        <details id="linkPanel" open><summary>Collega la tua Cassaforte</summary>
+          <p class="description">Sul Mac apri <strong>Cassaforte → Copia codice pubblico</strong>. Incolla qui il codice che inizia con NF1.</p>
+          <label for="vaultName" class="field-label">Nome della Cassaforte</label><input id="vaultName" type="text" maxlength="80" placeholder="Es. Mac di Simone" autocomplete="off">
+          <label for="code" class="field-label">Codice pubblico del Mac</label>
+          <textarea id="code" rows="3" placeholder="NF1.…" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" maxlength="2048" aria-describedby="codeHint"></textarea>
+          <p id="codeHint" class="hint">Qui non serve la password della Cassaforte Mac. Riusando un codice già salvato puoi aggiornarne il nome.</p>
+          <div class="code-actions"><label class="check-label"><input id="remember" type="checkbox" checked> Salva su questo telefono</label><button id="saveCode" class="secondary" disabled>Collega Cassaforte</button></div>
+        </details>
+        <div id="fingerprintArea" class="fingerprint" hidden><span id="activeVaultName" class="field-label"></span><span class="field-label">Impronta della Cassaforte selezionata</span><code id="fingerprint"></code><label class="check-label verify"><input id="verified" type="checkbox"> <span>Ho confrontato <strong>tutta l’impronta</strong> con quella mostrata sul Mac.</span></label><button id="forget" class="text-button">Rimuovi questa Cassaforte dal telefono</button></div>
       </section>
       <section class="step" aria-labelledby="fileTitle">
         <div class="step-heading"><span class="step-number">02</span><div><p class="eyebrow">IL TUO FILE</p><h2 id="fileTitle">Scegli cosa proteggere.</h2></div></div>
@@ -76,7 +91,7 @@
       <section class="help" aria-label="Come usare Seal">
         <details><summary>Aggiungi Seal alla schermata Home</summary><p>Apri questa pagina in <strong>Safari</strong>, premi <strong>Condividi → Aggiungi alla schermata Home</strong> e conferma. Dall’icona, apri Seal online una prima volta e attendi «Disponibile offline». Non serve un account sviluppatore Apple.</p></details>
         <details><summary>File, Foto e condivisione</summary><p>Il selettore di iOS può offrire File e Foto. Per mantenere il file già sul dispositivo, scegli «Sul mio iPhone». Se scegli un elemento su iCloud, può essere iOS a scaricarlo prima della cifratura. Condividi solo il <strong>.nfenc</strong>, scegliendo il tuo Mac. Seal non può verificare la ricezione di AirDrop.</p></details>
-        <details><summary>Cosa viene conservato sul telefono?</summary><p>Solo il codice <strong>pubblico</strong>, se scegli di ricordarlo, e i file dell’app per aprirla offline. Il file scelto e il risultato non vengono conservati nell’archivio del sito. Il .nfenc che salvi in File resta dove scegli tu. Gli originali non vengono cancellati.</p></details>
+        <details><summary>Cosa viene conservato sul telefono?</summary><p>I nomi e i codici <strong>pubblici</strong> delle cassaforti salvate sono cifrati con la password di Seal. L’app si blocca quando la lasci e dopo 5 minuti di inattività. I file dell’app sono conservati per aprirla offline. Il file scelto e il risultato non vengono conservati nell’archivio del sito. Il .nfenc che salvi in File resta dove scegli tu. Gli originali non vengono cancellati.</p></details>
         <details><summary>Compatibilità e limiti</summary><p>Usa Safari con <strong>iOS 18.4 o successivo</strong>. Limite web: <strong>100 MiB per file</strong>. Il formato è compatibile con la Cassaforte NecroFinder per Mac 0.5/0.6. È un formato prototipo, senza audit indipendente: conserva gli originali e prova il percorso completo con un file di test.</p></details>
       </section>
       <footer><span>NecroFinder Seal <span aria-hidden="true">·</span> <b>DWARF</b></span><span>Una nuova luce sui tuoi file.</span></footer>

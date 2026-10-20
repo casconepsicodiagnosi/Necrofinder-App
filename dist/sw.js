@@ -1,6 +1,6 @@
 // Cache the app shell only. User-selected files and encrypted results never enter this cache.
-const VERSION = 'necrofinder-seal-shell-v1';
-const ASSETS = ['./', './index.html', './style.css', './app.mjs', './envelope.mjs', './encrypt-worker.mjs', './manifest.webmanifest', './necrofinder.png', './icons/180.png', './icons/192.png', './icons/512.png'];
+const VERSION = 'necrofinder-seal-shell-v2';
+const ASSETS = ['./', './index.html', './style.css', './app.mjs', './local-lock.mjs', './envelope.mjs', './encrypt-worker.mjs', './manifest.webmanifest', './necrofinder.png', './icons/180.png', './icons/192.png', './icons/512.png'];
 const paths = new Set(ASSETS.map(path => new URL(path, self.registration.scope).pathname));
 self.addEventListener('install', event => {
   event.waitUntil((async () => {

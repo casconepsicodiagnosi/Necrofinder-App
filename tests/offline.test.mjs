@@ -28,7 +28,7 @@ function environment({ redirected = false } = {}) {
 }
 test('installed shell serves the page, worker, crypto and icons without a network', async () => {
   const env = environment(); await env.lifecycle('install'); await env.lifecycle('activate'); const requests = env.network; env.offline();
-  for (const path of ['/', '/index.html', '/app.mjs', '/envelope.mjs', '/encrypt-worker.mjs', '/manifest.webmanifest', '/icons/180.png', '/icons/192.png', '/icons/512.png']) {
+  for (const path of ['/', '/index.html', '/app.mjs', '/local-lock.mjs', '/envelope.mjs', '/encrypt-worker.mjs', '/manifest.webmanifest', '/icons/180.png', '/icons/192.png', '/icons/512.png']) {
     const response = await env.request('https://seal.example' + path); assert.equal(response.status, 200); assert.ok((await response.arrayBuffer()).byteLength > 0);
   }
   assert.equal(env.network, requests);

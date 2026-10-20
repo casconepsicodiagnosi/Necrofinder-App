@@ -32,3 +32,11 @@ Il repository desktop verifica anche che il modulo Web Crypto, eseguito sotto No
 ## Distribuzione
 
 Pubblicare `dist/` su un’origine HTTPS dedicata. Il sito ha un manifest installabile e un service worker con scope relativo. All’aggiornamento modificare la versione della cache in `dist/sw.js` insieme alle risorse e verificare nuovamente l’interoperabilità se cambia `dist/envelope.mjs`. Nessuna chiave, password o file personale deve entrare in questo repository. Il file tests/native-v1.json contiene soltanto una chiave e una password di prova dichiaratamente non segrete.
+
+## Password locale e cassaforti nominate
+
+Seal richiede una password locale di almeno 10 caratteri, distinta dalla password Mac. Nomi, codici pubblici e selezione sono cifrati in localStorage con AES-256-GCM, una chiave non esportabile derivata con PBKDF2-SHA256 (600.000 iterazioni, salt casuale da 16 byte), nonce casuali e autenticazione del formato. La chiave resta solo in memoria durante la sessione. Il vecchio codice pubblico salvato viene migrato e rimosso dopo il primo salvataggio cifrato riuscito.
+
+Si possono nominare e selezionare più cassaforti. Il pannello di collegamento si richiude dopo il salvataggio; la conferma dell’intera impronta è richiesta di nuovo a ogni selezione o sblocco. Blocca chiude la sessione; l’app si blocca quando passa in secondo piano e dopo cinque minuti senza interazioni. I pannelli di sistema File/Condivisione hanno una breve eccezione per non interrompere il trasferimento. Il blocco elimina file e risultato dalla memoria dell’app, senza eliminare gli originali o le copie esportate.
+
+La password non viene inviata al server e non esiste recupero della password. Cancellare i dati del sito elimina l’elenco locale e richiede nuova configurazione, senza alterare le cassaforti sul Mac. Questo protegge i dati persistenti a riposo, non un dispositivo compromesso o una sessione già sbloccata. La password non costituisce un’autenticazione server.
